@@ -1,4 +1,9 @@
-use std::{sync::mpsc, thread};
+use std::{
+    fmt::{Debug, Display},
+    ops::Add,
+    sync::mpsc,
+    thread,
+};
 
 use crate::{dot_product, Vector};
 
@@ -137,6 +142,26 @@ where
         }
         write!(f, "}}")?;
         Ok(())
+    }
+}
+
+impl<T> std::ops::Mul for Matrix<T>
+where
+    T: std::ops::Mul<Output = T>
+        + std::ops::AddAssign
+        + Copy
+        + Default
+        + Send
+        + Debug
+        + Display
+        + Add
+        + 'static
+        + std::ops::Add<Output = T>,
+{
+    type Output = anyhow::Result<Matrix<T>>;
+
+    fn mul(self, rhs: Matrix<T>) -> Self::Output {
+        multiply(&self, &rhs)
     }
 }
 
