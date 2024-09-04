@@ -106,7 +106,7 @@ where
 }
 
 impl<T> Matrix<T> {
-    fn new(rows: usize, cols: usize, data: impl Into<Vec<T>>) -> Self {
+    pub fn new(rows: usize, cols: usize, data: impl Into<Vec<T>>) -> Self {
         Self {
             data: data.into(),
             rows,
