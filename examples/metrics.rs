@@ -24,7 +24,7 @@ fn main() -> anyhow::Result<()> {
 
 fn task_worker<T>(idx: usize, metrics: Metrics<T>, value: T) -> anyhow::Result<()>
 where
-    T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static,
+    T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static + Sync,
 {
     thread::spawn(move || {
         loop {
@@ -40,7 +40,7 @@ where
 
 fn request_worker<T>(metrics: Metrics<T>, value: T) -> anyhow::Result<()>
 where
-    T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static,
+    T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static + Sync,
 {
     thread::spawn(move || {
         loop {
