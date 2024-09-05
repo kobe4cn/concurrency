@@ -17,7 +17,21 @@ fn main() -> anyhow::Result<()> {
 
     loop {
         thread::sleep(Duration::from_secs(2));
-        println!("{:?}", metrics.snapshot());
+        let map = metrics.snapshot()?;
+        let mut count = 0;
+        loop {
+            count += 1;
+            if map.is_empty() {
+                break;
+            } else {
+                println!("Old M count:{}, {:?}", count, map);
+                // thread::sleep(Duration::from_secs(2));
+                if count > 10 {
+                    break;
+                }
+            }
+        }
+        println!("New M {:?}", metrics.snapshot());
     }
     // println!("{:?}", metrics.snapshot());
 }
