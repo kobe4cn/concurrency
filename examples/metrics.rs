@@ -7,7 +7,7 @@ const N: usize = 4;
 const M: usize = 8;
 fn main() -> anyhow::Result<()> {
     let metrics = Metrics::new();
-    println!("{:?}", metrics.snapshot());
+    println!("{:?}", metrics);
     for idx in 0..N {
         task_worker(idx, metrics.clone(), 1)?;
     }
@@ -17,21 +17,21 @@ fn main() -> anyhow::Result<()> {
 
     loop {
         thread::sleep(Duration::from_secs(2));
-        let map = metrics.snapshot()?;
-        let mut count = 0;
-        loop {
-            count += 1;
-            if map.is_empty() {
-                break;
-            } else {
-                println!("Old M count:{}, {:?}", count, map);
-                // thread::sleep(Duration::from_secs(2));
-                if count > 10 {
-                    break;
-                }
-            }
-        }
-        println!("New M {:?}", metrics.snapshot());
+        // let map = metrics;
+        // let mut count = 0;
+        // loop {
+        //     count += 1;
+        //     if metrics.data.is_empty() {
+        //         break;
+        //     } else {
+        //         println!("Old M count:{}, {:?}", count, map);
+        //         // thread::sleep(Duration::from_secs(2));
+        //         if count > 10 {
+        //             break;
+        //         }
+        //     }
+        // }
+        println!("New M {:?}", metrics);
     }
     // println!("{:?}", metrics.snapshot());
 }
