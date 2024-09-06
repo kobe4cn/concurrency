@@ -8,16 +8,16 @@ use std::sync::Arc;
 use dashmap::DashMap;
 
 #[derive(Debug, Clone)]
-pub struct Metrics<T> {
+pub struct CmapMetrics<T> {
     data: Arc<DashMap<String, T>>,
 }
 #[allow(clippy::new_without_default)]
-impl<T> Metrics<T>
+impl<T> CmapMetrics<T>
 where
     T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Sync,
 {
     pub fn new() -> Self {
-        Metrics {
+        CmapMetrics {
             data: Arc::new(DashMap::new()),
         }
     }
@@ -53,7 +53,7 @@ where
     //         .clone())
     // }
 }
-impl<T> fmt::Display for Metrics<T>
+impl<T> fmt::Display for CmapMetrics<T>
 where
     T: fmt::Display + std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Sync,
 {

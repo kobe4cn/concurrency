@@ -1,12 +1,12 @@
 use std::{thread, time::Duration};
 
-use concurrency::Metrics;
+use concurrency::CmapMetrics;
 use rand::Rng;
 
 const N: usize = 4;
 const M: usize = 8;
 fn main() -> anyhow::Result<()> {
-    let metrics = Metrics::new();
+    let metrics = CmapMetrics::new();
     println!("{:?}", metrics);
     for idx in 0..N {
         task_worker(idx, metrics.clone(), 1)?;
@@ -31,12 +31,12 @@ fn main() -> anyhow::Result<()> {
         //         }
         //     }
         // }
-        println!("New M {:?}", metrics);
+        println!("New M {}", metrics);
     }
     // println!("{:?}", metrics.snapshot());
 }
 
-fn task_worker<T>(idx: usize, metrics: Metrics<T>, value: T) -> anyhow::Result<()>
+fn task_worker<T>(idx: usize, metrics: CmapMetrics<T>, value: T) -> anyhow::Result<()>
 where
     T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static + Sync,
 {
@@ -52,7 +52,7 @@ where
     Ok(())
 }
 
-fn request_worker<T>(metrics: Metrics<T>, value: T) -> anyhow::Result<()>
+fn request_worker<T>(metrics: CmapMetrics<T>, value: T) -> anyhow::Result<()>
 where
     T: std::ops::AddAssign + std::ops::SubAssign + Copy + Default + Send + 'static + Sync,
 {
